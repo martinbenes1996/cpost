@@ -1,11 +1,9 @@
 
-import sys
-sys.path.append("..")
-
 import cpost
 
 def fill_db():
     for region in cpost.regions():
-        print(region)
+        for district in cpost.districts(region['id']):
+            print(district)
 
 __all__ = ["fill_db"]
