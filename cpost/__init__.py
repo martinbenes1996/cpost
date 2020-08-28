@@ -9,7 +9,8 @@ Todo:
 """
 
 import pkg_resources
-from .czechpost import *
+
+from .api import *
 
 try:
     __version__ = pkg_resources.get_distribution("cpost").version

@@ -7,17 +7,18 @@ import cpost
 
 class TestCzechPost(unittest.TestCase):
     def test_regions(self):
-        x = cpost.regions()
+        x = cpost._api.regions()
     def test_districts(self):
-        x = cpost.districts(11)
+        x = cpost._api.districts(11)
     def test_cities(self):
-        x = cpost.cities(55)
+        x = cpost._api.cities(55)
     def test_city_parts(self):
-        x = cpost.city_parts(5185)
+        x = cpost._api.city_parts(5185)
     def test_streets(self):
-        x = cpost.streets(12501)
+        x = cpost._api.streets(12501)
     def test_addresses(self):
-        x = cpost.addresses(28783)
+        x = cpost._api.addresses(28783)
+        print(x)
 
 __all__ = ["TestCzechPost"]
         
