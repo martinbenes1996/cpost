@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="UTF-8") as fh:
 
 setuptools.setup(
   name = 'cpost',
-  version = '0.0.2',
+  version = '0.0.3',
   author = 'Martin Beneš',
   author_email = 'martinbenes1996@gmail.com',
   description = 'API/Python lib for Czech addresses.',
@@ -21,7 +21,7 @@ setuptools.setup(
   packages=setuptools.find_packages(),
   license='MIT',
   url = 'https://github.com/martinbenes1996/cpost',
-  download_url = 'https://github.com/martinbenes1996/cpost/archive/0.0.2.tar.gz',
+  download_url = 'https://github.com/martinbenes1996/cpost/archive/0.0.3.tar.gz',
   keywords = ['2019-nCov', 'poland', 'coronavirus', 'covid-19', 'covid-data', 'covid19-data'],
   install_requires=reqs,
   package_dir={'': '.'},
