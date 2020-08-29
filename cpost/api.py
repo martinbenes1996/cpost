@@ -6,16 +6,26 @@ import requests
 from . import _b2c as b2c
 
 def regions():
-    data = b2c.json('/services/Address/getRegionListAsJson')
-    return sorted(data, key=lambda i: int(i['id']))
-def districts(region_id):
-    params = {"id": int(region_id)}
-    data = b2c.json('/services/Address/getDistrictListAsJson', params=params)
-    return data
-def cities(district_id):
-    params = {"id": int(district_id)}
-    data = b2c.json('/services/Address/getCityListAsJson', params=params)
-    return data
+    x = b2c.json('/services/Address/getRegionListAsJson')
+    return [d for d in x]
+def districts(region_id = None):
+    def _districts(region_id):
+        params = {"id": int(region_id)}
+        return b2c.json('/services/Address/getDistrictListAsJson', params=params)
+    # a certain region
+    if region_id is not None: x = _districts(region_id)
+    # all regions
+    else: x = [_districts(r) for r in regions()]
+    return [d for d in x]
+def cities(district_id = None):
+    def _cities(district_id):
+        params = {"id": int(district_id)}
+        return b2c.json('/services/Address/getCityListAsJson', params=params)
+    # a certain district
+    if district_id is not None: x = _cities(district_id)
+    # all districts
+    else: x = [_cities(d) for d in districts()]
+    return [c for c in x]
 def city_parts(city_id):
     params = {"id": int(city_id)}
     data = b2c.json('/services/Address/getCityPartListAsJson', params=params)
