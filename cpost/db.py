@@ -24,7 +24,7 @@ def cities(district_id = None):
         x = filter(lambda i: i['district_id'] == district_id, data)
         return x
     # a certain district
-    if district_id is in None: x = _cities(district_id)
+    if district_id is not None: x = _cities(district_id)
     # all districts
     else: x = [_cities(d) for d in districts()]
     return [c for c in x]
