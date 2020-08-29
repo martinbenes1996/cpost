@@ -11,7 +11,7 @@ def regions():
 def districts(region_id = None):
     def _districts(region_id):
         x = _db._read_districts()
-        return filter(lambda i: i['region_id'] == region_id, data)
+        return filter(lambda i: i['region_id'] == region_id, x)
     # a certain region
     if region_id is not None: x = _districts(region_id)
     # all regions
@@ -21,7 +21,7 @@ def districts(region_id = None):
 def cities(district_id = None):
     def _cities(district_id):
         x = _db.read_cities()
-        x = filter(lambda i: i['district_id'] == district_id, data)
+        x = filter(lambda i: i['district_id'] == district_id, x)
         return x
     # a certain district
     if district_id is not None: x = _cities(district_id)
