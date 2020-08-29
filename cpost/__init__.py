@@ -10,7 +10,8 @@ Todo:
 
 import pkg_resources
 
-from .api import *
+from . import api
+from . import db
 
 try:
     __version__ = pkg_resources.get_distribution("cpost").version

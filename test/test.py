@@ -4,7 +4,8 @@ import unittest
 sys.path.append(".")
 
 # === unit tests ===
-from test_czechpost import *
+from test_api import *
+from test_db import *
 # ==================
 
 

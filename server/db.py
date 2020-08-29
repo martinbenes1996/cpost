@@ -62,12 +62,16 @@ def initialize(c, regions, districts):
                   [(r['region_id'],r['region_name']) for r in regions])
     c.executemany('INSERT INTO districts VALUES (?,?)',
                   [(d['district_id'],d['district_name']) for d in districts])
+    _log.info("database initialized")
 
 bypass = lambda x: x
+def tryInt(i):
+    try: return int(i)
+    except: i
 city_cols = ['city_id','city_name','district_id','region_id']
 city_f = [int, bypass, int, bypass, int, bypass]
 address_cols = ['house_id','house_name','street_id','street_name','city_part_id','city_part_name','city_id']
-address_f = [int, bypass, int, bypass, int, bypass, int]
+address_f = [int, bypass, tryInt, bypass, int, bypass, int]
 
 @dbaccess("../sql/data.db")
 def insert_city(c, data):
@@ -101,6 +105,11 @@ def read_addresses(c):
     c.execute('SELECT * FROM addresses')
     x = c.fetchall()
     return [{col: xij for col,xij in zip(address_cols,xi)} for xi in x]
+
+# logger
+import logging
+_log = logging.getLogger(__name__)
+
 __all__ = ["initialize",
            "insert_city","insert_address",
            "read_cities","read_addresses",

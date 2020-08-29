@@ -25,7 +25,7 @@ setuptools.setup(
   keywords = ['2019-nCov', 'poland', 'coronavirus', 'covid-19', 'covid-data', 'covid19-data'],
   install_requires=reqs,
   package_dir={'': '.'},
-  package_data={'': ['data/*.json','data/*.csv']},
+  package_data={'': ['data/*.json','data/*.csv','data/*.db']},
   include_package_data=True,
   classifiers=[
     'Development Status :: 2 - Pre-Alpha',
