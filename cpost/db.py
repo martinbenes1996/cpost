@@ -17,7 +17,7 @@ def districts(region_id = None):
     # all regions
     #else: x = [_districts(r) for r in regions()]
     x = _db._read_districts()
-    return [d for d in x]
+    return x
 
 def cities(district_id = None):
     def _cities(district_id):

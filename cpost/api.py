@@ -7,7 +7,7 @@ from . import _b2c as b2c
 
 def regions():
     x = b2c.json('/services/Address/getRegionListAsJson')
-    return [d for d in x]
+    return {d['id']: d['name'] for d in x}
 def districts(region_id = None):
     def _districts(region_id):
         params = {"id": int(region_id)}
@@ -16,7 +16,8 @@ def districts(region_id = None):
     if region_id is not None: x = _districts(region_id)
     # all regions
     else: x = [_districts(r) for r in regions()]
-    return [d for d in x]
+    return {d['id']: d['name'] for d in x}
+
 def cities(district_id = None):
     def _cities(district_id):
         params = {"id": int(district_id)}
