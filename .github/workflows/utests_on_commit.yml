@@ -25,4 +25,4 @@ jobs:
     
     - name: Run unittests # run unittests
       run:
-        python tests/test.py
+        python test/test.py
