@@ -4,9 +4,18 @@ import unittest
 
 import cpost
 
-class TestCzechPost(unittest.TestCase):
+class TestApi(unittest.TestCase):
     def test_regions(self):
         x = cpost.api.regions()
+        self.assertIsInstance(x, dict)
+        self.assertTrue(len(x) == 14)
+        for r in range(1,14):
+            self.assertIn(r, region.keys())
+        for r in ['Hlavní město Praha','Jihočeský','Jihomoravský','Karlovarský',
+                  'Královéhradecký','Liberecký','Moravskoslezský','Olomoucký',
+                  'Pardubický','Plzeňský','Středočeský','Ústecký','Vysočina','Zlínský']:
+            self.assertIn(r, x.values())
+        print("Tested")
     def test_districts(self):
         x = cpost.api.districts(11)
     def test_cities(self):
@@ -18,5 +27,5 @@ class TestCzechPost(unittest.TestCase):
     def test_addresses(self):
         x = cpost.api.addresses(28783)
 
-__all__ = ["TestCzechPost"]
+__all__ = ["TestApi"]
         

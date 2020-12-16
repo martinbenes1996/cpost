@@ -6,7 +6,7 @@ sys.path.append("..")
 
 import cpost
 
-class TestCzechPost(unittest.TestCase):
+class TestDB(unittest.TestCase):
     def test_regions(self):
         x = cpost.db.regions()
     def test_districts(self):
@@ -26,5 +26,5 @@ class TestCzechPost(unittest.TestCase):
             x = cpost.db.addresses(28783)
         except: pass
 
-__all__ = ["TestCzechPost"]
+__all__ = ["TestDB"]
         
