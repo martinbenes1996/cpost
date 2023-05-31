@@ -129,12 +129,12 @@ def addresses(
         lambda n: {
             'city_part_id': city_part_id,
             'street_id': street_id,
-            'house_id': int(n['id']),
+            'address_id': int(n['id']),
             'name': n['name']
         },
         ns
     )
-    ns = sorted(ns, key=lambda k: k['house_id'])
+    ns = sorted(ns, key=lambda k: k['address_id'])
     return list(ns)
 
 __all__ = ['regions', 'districts', 'cities', 'city_parts', 'streets', 'addresses']
