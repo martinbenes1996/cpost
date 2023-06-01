@@ -1,6 +1,7 @@
 
 import cpost
 import db
+import sqlalchemy
 from tqdm import tqdm
 
 def main():
@@ -255,5 +256,89 @@ def main():
     # x = cpost.api.addresses(city_part_id=12501)  # 28783)#, 12501)
     # print(x)
 
+import pandas as pd
+import sqlite3
+
+def deduplicate():
+    # fetch
+    con = sqlite3.connect("db/cpost.sqlite")
+    df_address = pd.read_sql('SELECT DISTINCT address_id, name, city_part_id, street_id FROM address', con=con)
+    df_street = pd.read_sql('SELECT DISTINCT street_id, name, city_part_id FROM street', con=con)
+    df_citypart = pd.read_sql('SELECT DISTINCT city_part_id, name, city_id FROM city_part', con=con)
+    df_city = pd.read_sql('SELECT DISTINCT city_id, name, district_id FROM city', con=con)
+    df_district = pd.read_sql('SELECT DISTINCT district_id, name, region_id FROM district', con=con)
+    df_region = pd.read_sql('SELECT DISTINCT region_id, name FROM region', con=con)
+
+    #
+    df_street_address = df_address.merge(
+        df_street,
+        on=['street_id'],
+        how='left',
+        suffixes=('_address', '_street'),
+    )
+    df_street_address = df_street_address.rename({'city_part_id_address': 'city_part_id'}, axis=1)
+    #
+    df_citypart_address = df_street_address.merge(
+        df_citypart,
+        on=['city_part_id'],
+        how='left',
+    )
+    #
+    df_city_address = df_citypart_address.merge(
+        df_city,
+        on=['city_id'],
+        how='left',
+        suffixes=('_citypart','_city'),
+    )
+    #
+    df_district_address = df_city_address.merge(
+        df_district,
+        on=['district_id'],
+        how='left',
+    )
+    #
+    df_region_address = df_district_address.merge(
+        df_region,
+        on=['region_id'],
+        how='left',
+        suffixes=('_district','_region')
+    )
+    #
+    addresses = df_region_address.apply(
+        lambda r: f"{r['name_street']} {r['name_address']}, {r['name_city']}",
+        axis=1,
+    )
+    print(addresses)
+
+import xml.etree.ElementTree as et
+
+def get_datovky():
+    xtree = et.parse('db/datovky/datafile-seznam_ds_fo-20230321064036.xml')
+    subtree = xtree.getroot().iter('list')
+    # print(dir(xtree))
+    # subtree = xtree.iter('box')
+    for node in subtree:
+        record = {
+            k: node.find(k)#.text
+            for k in ['id','type','subtype']#,'firstName','lastName']
+        }
+        print(record)
+        break
+    #     s_id = node.find('id').text
+    #     s_type = node.find('type').text
+    #     s_subtype = node.find('subtype').text
+    #     s_firstName = node.find('firstName').text
+    #     s_lastName = node.find('lastName').text
+    # with open('db/datovky/datafile-seznam_ds_fo-20230321064036.xml') as fp:
+    #     text = fp.read()
+    #     fo = pd.read_xml(text, parser='lxml')
+    # fo.to_csv()
+    # print(fo)
+
+# if __name__ == '__main__':
+#     main()
+# if __name__ == '__main__':
+#     deduplicate()
+
 if __name__ == '__main__':
-    main()
+    get_datovky()

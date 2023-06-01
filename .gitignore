@@ -131,3 +131,5 @@ dmypy.json
 # Apple
 .DS_Store
 *.sqlite
+
+datovky
